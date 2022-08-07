@@ -11,8 +11,8 @@ const truncateStr = (fullStr, strLen) => {
     if (fullStr.length <= strLen) return fullStr
 
     const separator = "..."
-    const seperatorLength = separator.length
-    const charsToShow = strLen - seperatorLength
+    const separatorLength = separator.length
+    const charsToShow = strLen - separatorLength
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
     return (
@@ -36,7 +36,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
         contractAddress: nftAddress,
         functionName: "tokenURI",
         params: {
-            tokenId: tokenId,
+            tokenId,
         },
     })
 
@@ -52,8 +52,16 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
     })
 
     async function updateUI() {
-        const tokenURI = await getTokenURI()
-        console.log(`The TokenURI is ${tokenURI}`)
+        console.log("NFT abi")
+        console.log(nftAbi)
+        console.log("nft Address")
+        console.log(nftAddress)
+        console.log("token Id")
+        console.log(tokenId)
+        const tokenURI = await getTokenURI({ onError: (e) => console.log(e) })
+
+        console.log("TokeURI")
+        console.log(tokenURI)
         // We are going to cheat a little here...
         if (tokenURI) {
             // IPFS Gateway: A server that will return IPFS files from a "normal" URL.
